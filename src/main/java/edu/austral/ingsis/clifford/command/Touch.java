@@ -1,14 +1,14 @@
 package edu.austral.ingsis.clifford.command;
 
-import edu.austral.ingsis.clifford.cli.CLI;
-import edu.austral.ingsis.clifford.filesystem.File;
-
-import java.util.List;
-
 import static edu.austral.ingsis.clifford.filesystem.NodeType.FILE;
 
-public class Touch implements Command{
+import edu.austral.ingsis.clifford.cli.CLI;
+import edu.austral.ingsis.clifford.filesystem.File;
+import java.util.List;
+
+public class Touch implements Command {
   private final CLI cli;
+
   public Touch(CLI cli) {
     this.cli = cli;
   }
@@ -20,9 +20,11 @@ public class Touch implements Command{
       return "could not create file";
     }
 
-    if(!cli.currentDirectory.containsElement(fileName, FILE)){
-      cli.currentDirectory.addChild(new File(fileName));
-    };
+    if (cli.currentDirectory.doesNotContainElement(fileName, FILE)) {
+      File file = new File(fileName);
+      file.parentDir = cli.currentDirectory;
+      cli.currentDirectory.addChild(file);
+    }
     return "'" + fileName + "'" + " file created";
   }
 }

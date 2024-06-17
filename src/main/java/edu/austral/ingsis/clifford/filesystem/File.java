@@ -1,26 +1,20 @@
 package edu.austral.ingsis.clifford.filesystem;
 
-public class File implements FileSystemNode{
+public class File implements FileSystemNode {
   private final String name;
-  protected Directory parentDir;
+  public Directory parentDir;
 
   public File(String name) {
     this.name = name;
   }
+
   protected File(String name, Directory parentDir) {
     this.name = name;
     this.parentDir = parentDir;
   }
 
-
   @Override
   public String getName() {
     return name;
   }
-
-  @Override
-  public Directory getParentDirectory() {
-    return parentDir;
-  }
-
 }

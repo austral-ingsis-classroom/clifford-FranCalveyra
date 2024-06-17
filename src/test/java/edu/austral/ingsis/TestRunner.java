@@ -3,8 +3,9 @@ package edu.austral.ingsis;
 import edu.austral.ingsis.clifford.cli.CLI;
 import java.util.List;
 
-public class TestRunner implements FileSystemRunner{
-  private CLI cli;
+public class TestRunner implements FileSystemRunner {
+  private final CLI cli;
+
   public TestRunner(CLI cli) {
     this.cli = cli;
   }

@@ -3,11 +3,10 @@ package edu.austral.ingsis;
 import static java.util.Map.entry;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.List;
-import java.util.Map;
-
 import edu.austral.ingsis.clifford.cli.CLI;
 import edu.austral.ingsis.clifford.filesystem.Directory;
+import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 public class FileSystemTests {
@@ -119,9 +118,9 @@ public class FileSystemTests {
             entry("mkdir emily", "'emily' directory created"),
             entry("touch horace.txt", "'horace.txt' file created"),
             entry("touch jetta.txt", "'jetta.txt' file created"),
-            entry("ls", "emily emily.txt jetta.txt"),
+            entry("ls", "emily horace.txt jetta.txt"),
             entry("rm --recursive emily", "'emily' removed"),
-            entry("ls", "emily.txt jetta.txt"),
-            entry("ls --ord=desc", "jetta.txt emily.txt")));
+            entry("ls", "horace.txt jetta.txt"),
+            entry("ls --ord=desc", "jetta.txt horace.txt")));
   }
 }
