@@ -1,0 +1,53 @@
+@startuml
+
+interface FileSystemNode {
++delete(): void
++getName(): String
++getParentDirectory(): Directory
++getThis(): FileSystemNode
+}
+
+class Directory implements FileSystemNode{
+-ownReference: FileSystemNode
+-children: List<FileSystemNode>
+-name: String
++delete(): void
++getName(): String
++getParentDirectory(): Directory
++getThis(): FileSystemNode
++getChildren(): List<FileSystemNode>
++addChild(FileSystemNode node): void
++removeChild(FileSystemNode node): void
+}
+
+class File implements FileSystemNode{
+-name: String
++delete(): void
++getName(): String
++getParentDirectory(): Directory
++getThis(): FileSystemNode
+}
+
+interface Command{
++execute(FileSystemNode target, String params): String
+}
+
+class CLI{
++executeCommand(String command): String
+}
+
+class ChangeDirectory implements Command{}
+class Ls implements Command{}
+class PrintWorkingDirectory implements Command{}
+class Touch implements Command{}
+class MakeDirectory implements Command{}
+class Remove implements Command{}
+
+'Extras
+CLI -> Command
+Command --> FileSystemNode
+Directory o-- FileSystemNode
+
+
+
+@enduml
