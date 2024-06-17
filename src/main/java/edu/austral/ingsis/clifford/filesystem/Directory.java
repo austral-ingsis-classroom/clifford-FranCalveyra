@@ -40,9 +40,10 @@ public class Directory implements FileSystemNode {
   }
 
   public void addChild(FileSystemNode node) {
-
+    children.add(node);
   }
-  public void removeChild(FileSystemNode node) {
 
+  public void removeChild(FileSystemNode node) {
+    children.remove(node);
   }
 }

@@ -1,6 +1,7 @@
 package edu.austral.ingsis.clifford.command;
 
 import edu.austral.ingsis.clifford.cli.CLI;
+import edu.austral.ingsis.clifford.filesystem.Directory;
 
 import java.util.List;
 
@@ -12,6 +13,8 @@ public class MakeDirectory implements Command{
 
   @Override
   public String execute(List<String> flags, List<String> args) {
-    return "";
+    String name = args.getFirst();
+    cli.currentDirectory.addChild(new Directory(name));
+    return "'" + name + "' directory created";
   }
 }
