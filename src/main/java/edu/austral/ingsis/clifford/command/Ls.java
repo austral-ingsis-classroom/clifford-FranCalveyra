@@ -3,6 +3,7 @@ package edu.austral.ingsis.clifford.command;
 import edu.austral.ingsis.clifford.cli.CLI;
 import edu.austral.ingsis.clifford.filesystem.Directory;
 import edu.austral.ingsis.clifford.filesystem.FileSystemNode;
+import edu.austral.ingsis.clifford.utils.FileSystemComparator;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -16,7 +17,6 @@ public class Ls implements Command{
 
   @Override
   public String execute(List<String> flags, List<String> args) {
-    //TODO
     Directory dir = cli.currentDirectory;
     List<FileSystemNode> children = dir.getChildren();
     List<String> childrenNames = new ArrayList<>(children.stream().map(FileSystemNode::getName).toList());
@@ -24,11 +24,12 @@ public class Ls implements Command{
   }
 
   private String getOutput(List<String> children, List<String> flags) {
-    //TODO
     if(children.isEmpty()){
       return "";
     }
-    if(flags.isEmpty()){
+    if(flags.isEmpty() || notValidFlags(flags)){
+      Comparator<String> fsComparator = new FileSystemComparator(cli);
+      children.sort(fsComparator);
       return getString(children);
     }
     Comparator<String> sortingOrder = getComparator(flags);
@@ -36,13 +37,23 @@ public class Ls implements Command{
     return getString(children);
   }
 
+  private boolean notValidFlags(List<String> flags) {
+    return !(flags.contains("--ord=asc") || flags.contains("--ord=desc"));
+  }
+
   private Comparator<String> getComparator(List<String> flags) {
     return flags.getFirst().equals("--ord=asc") ? Comparator.naturalOrder() : Comparator.reverseOrder();
   }
 
   private String getString(List<String> childrenNames) {
+
     StringBuilder sb = new StringBuilder();
     childrenNames.forEach(child -> sb.append(child).append(" "));
-    return sb.substring(0, sb.toString().length() - 1);
+    if(sb.toString().charAt(sb.length()-1) == ' '){
+      sb.deleteCharAt(sb.length()-1);
+    }
+    return sb.toString();
   }
+
+
 }

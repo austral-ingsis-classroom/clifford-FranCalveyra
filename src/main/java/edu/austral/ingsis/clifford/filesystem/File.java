@@ -2,16 +2,14 @@ package edu.austral.ingsis.clifford.filesystem;
 
 public class File implements FileSystemNode{
   private final String name;
-  private FileSystemNode ownReference;
+  protected Directory parentDir;
 
   public File(String name) {
     this.name = name;
-    this.ownReference = this;
   }
-
-  @Override
-  public void delete() {
-    ownReference = null;
+  protected File(String name, Directory parentDir) {
+    this.name = name;
+    this.parentDir = parentDir;
   }
 
 
@@ -22,11 +20,7 @@ public class File implements FileSystemNode{
 
   @Override
   public Directory getParentDirectory() {
-    return null;
+    return parentDir;
   }
 
-  @Override
-  public FileSystemNode getThis() {
-    return ownReference;
-  }
 }

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public class CLI {
-  private final Directory root;
+  public final Directory root;
   public Directory currentDirectory;
   private final Map<String, Command> existingCommands;
 
@@ -45,7 +45,7 @@ public class CLI {
     }
   }
   private CommandLine buildArgs(String[] args) {
-    List<String> flags = args.length>=2 ? new ArrayList<>(List.of(args[args.length-1])) : List.of();
+    List<String> flags = args.length>2 ? new ArrayList<>(List.of(args[1])) : List.of(args[args.length-1]);
     return new CommandLine(args[0],flags, new ArrayList<>(List.of(args[args.length-1])));
   }
 

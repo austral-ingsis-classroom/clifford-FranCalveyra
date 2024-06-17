@@ -48,7 +48,7 @@ public class FileSystemTests {
             entry("pwd", "/emily"),
             entry("touch elizabeth.txt", "'elizabeth.txt' file created"),
             entry("mkdir t-bone", "'t-bone' directory created"),
-            entry("ls", "elizabeth t-bone")));
+            entry("ls", "t-bone elizabeth.txt")));
   }
 
   @Test
@@ -63,7 +63,7 @@ public class FileSystemTests {
             entry("mkdir t-bone", "'t-bone' directory created"),
             entry("touch elizabeth.txt", "'elizabeth.txt' file created"),
             entry("ls", "t-bone elizabeth.txt"),
-            entry("rm", "cannot remove 't-bone', is a directory"),
+            entry("rm t-bone", "cannot remove 't-bone', is a directory"),
             entry("rm --recursive t-bone", "'t-bone' removed"),
             entry("ls", "elizabeth.txt"),
             entry("rm elizabeth.txt", "'elizabeth.txt' removed"),

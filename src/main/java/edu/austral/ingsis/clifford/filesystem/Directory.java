@@ -4,19 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Directory implements FileSystemNode {
-  private FileSystemNode ownReference;
+  public Directory parentDir;
   private List<FileSystemNode> children;
   private String name;
 
   public Directory(String name) {
     this.name = name;
-    children = new ArrayList<FileSystemNode>();
-    ownReference = this;
+    children = new ArrayList<>();
   }
-
-  @Override
-  public void delete() {
-    ownReference = null;
+  private Directory(String name, Directory parentDir, List<FileSystemNode> children) {
+    this.name = name;
+    this.parentDir = parentDir;
+    this.children = children;
   }
 
   @Override
@@ -26,24 +25,38 @@ public class Directory implements FileSystemNode {
 
   @Override
   public Directory getParentDirectory() {
-    return null;
+    return parentDir;
   }
 
-  @Override
-  public FileSystemNode getThis() {
-    return ownReference;
-  }
 
+  public FileSystemNode getChild(String name) {
+    return children.stream().filter(child -> child.getName().equals(name)).findFirst().orElse(null);
+  }
 
   public List<FileSystemNode> getChildren() {
     return children;
   }
 
   public void addChild(FileSystemNode node) {
-    children.add(node);
+    FileSystemNode copy = node;
+    if(node instanceof Directory dir){
+      copy = new Directory(dir.name, dir.parentDir, dir.children);
+    }
+    else if (node instanceof File file){
+      copy = new File(file.getName(), file.parentDir);
+    }
+    children.add(copy);
   }
 
-  public void removeChild(FileSystemNode node) {
-    children.remove(node);
+  public void removeChild(String nodeName) {
+    children.removeIf(child -> child.getName().equals(nodeName));
+  }
+
+  public boolean containsElement(String fileName, NodeType type){
+    return getChildren().stream().anyMatch(child -> child.getName().equals(fileName) && sameType(type, child));
+  }
+
+  private boolean sameType(NodeType type, FileSystemNode child) {
+    return type == NodeType.DIRECTORY ? child instanceof Directory : child instanceof File;
   }
 }
