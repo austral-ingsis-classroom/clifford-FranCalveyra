@@ -29,7 +29,7 @@ class File implements FileSystemNode{
 }
 
 interface Command{
-+execute(FileSystemNode target, String params): String
++execute(List<String> flags, List<String> args): String
 }
 
 class CLI{

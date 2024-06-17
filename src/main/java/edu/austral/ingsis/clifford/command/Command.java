@@ -1,7 +1,7 @@
 package edu.austral.ingsis.clifford.command;
 
-import edu.austral.ingsis.clifford.filesystem.FileSystemNode;
+import java.util.List;
 
 public interface Command {
-  String execute(FileSystemNode target,String flags ,String params);
+  String execute(List<String> flags, List<String> args);
 }
